@@ -10,6 +10,8 @@ import dotenvExpand from "dotenv-expand";
 import helmet from "helmet";
 import morgan from "morgan";
 
+import authRoutes from "./routes/auth.js";
+
 const app = express();
 const env = dotenv.config();
 dotenvExpand.expand(env);
@@ -51,6 +53,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("dev"));
+app.use("/api/auth", authRoutes);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
