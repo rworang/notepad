@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "events": {
+    "crash": "fuser -k 4587/tcp && sleep 1 && npm run start"
+  }
+}
