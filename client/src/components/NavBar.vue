@@ -1,21 +1,19 @@
 <script setup>
-import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 import UserMenu from './UserMenu.vue'
 const user = useUserStore()
-const router = useRouter()
 </script>
 
 <template>
   <header class="navbar">
-    <div class="left">
+    <div class="left" @click="user.setSidemenu(!user.sidemenuToggled)">
       <div class="menu-button">
         <mdicon name="menu" />
       </div>
       <h1 class="app-title">Notepad</h1>
     </div>
     <div class="center"></div>
-    <div class="right">
+    <div class="right" @click="user.setUsermenu(!user.usermenuToggled)">
       <template v-if="user.isAuthenticated">
         <UserMenu />
       </template>
@@ -48,7 +46,8 @@ const router = useRouter()
   }
 }
 
-.menu-button {
+.left {
+  cursor: pointer;
   padding: 2px;
 }
 .app-title {

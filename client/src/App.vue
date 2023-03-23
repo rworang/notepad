@@ -1,10 +1,12 @@
 <script setup>
+import SideMenu from './components/SideMenu.vue'
 import NavBar from '@/components/NavBar.vue'
 </script>
 
 <template>
   <NavBar />
   <main class="app-content">
+    <SideMenu />
     <RouterView />
   </main>
 </template>
@@ -14,11 +16,8 @@ import NavBar from '@/components/NavBar.vue'
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   color: var(--nt-c-gray-darker);
   background-color: var(--nt-c-gray-light);
   margin-top: var(--nt-navbar-height);
-  padding: 16px;
 }
 </style>

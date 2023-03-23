@@ -2,16 +2,15 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useUserStore } from '../stores/user'
 const user = useUserStore()
-const toggled = ref(false)
 const menuRef = ref(null)
 const menuWrapperRef = ref(null)
 
 const handleClickOutside = (event) => {
-  if (toggled.value) {
+  if (user.usermenuToggled) {
     const menuEl = menuRef.value
     const userWrapperEl = menuWrapperRef.value
     if (!menuEl.contains(event.target) && !userWrapperEl.contains(event.target)) {
-      toggled.value = false
+      user.setUsermenu(false)
     }
   }
 }
@@ -27,10 +26,10 @@ onUnmounted(() => {
 
 <template>
   <div class="user-menu-wrapper" ref="menuWrapperRef">
-    <div class="user-menu-info" @click="toggled = !toggled">
+    <div class="user-menu-info">
       <div class="user-menu-avatar"><img :src="user.avatar" /></div>
       <div class="user-menu-username" v-html="user.name" />
-      <template v-if="!toggled">
+      <template v-if="!user.usermenuToggled">
         <mdicon class="user-menu-icon" name="chevronDown" size="20" />
       </template>
       <template v-else>
@@ -38,7 +37,7 @@ onUnmounted(() => {
       </template>
     </div>
 
-    <div class="user-menu active-shadow" v-if="toggled" ref="menuRef">
+    <div class="user-menu active-shadow" v-if="user.usermenuToggled" ref="menuRef">
       <span class="user-menu-item">Profile</span>
       <span class="user-menu-item">Notes</span>
       <span class="user-menu-item">Settings</span>
