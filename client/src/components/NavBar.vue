@@ -1,19 +1,21 @@
 <script setup>
+import { useAppDataStore } from '../stores/app-data'
 import { useUserStore } from '../stores/user'
 import UserMenu from './UserMenu.vue'
+const appData = useAppDataStore()
 const user = useUserStore()
 </script>
 
 <template>
   <header class="navbar">
-    <div class="left" @click="user.setSidemenu(!user.sidemenuToggled)">
+    <div class="left" @click="appData.setSidemenuToggled(!appData.sidemenu.toggled)">
       <div class="menu-button">
         <mdicon name="menu" />
       </div>
       <h1 class="app-title">Notepad</h1>
     </div>
     <div class="center"></div>
-    <div class="right" @click="user.setUsermenu(!user.usermenuToggled)">
+    <div class="right" @click="appData.setUsermenuToggled(!appData.usermenu.toggled)">
       <template v-if="user.isAuthenticated">
         <UserMenu />
       </template>
@@ -34,7 +36,7 @@ const user = useUserStore()
   align-items: center;
   justify-content: space-between;
   padding: 4px 6px;
-  box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.17);
+  box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.17);
   z-index: 500;
 
   .left,
@@ -51,6 +53,9 @@ const user = useUserStore()
   padding: 2px;
 }
 .app-title {
-  padding: 2px;
+  padding: 2px 6px;
+  font-size: 1.06em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 </style>

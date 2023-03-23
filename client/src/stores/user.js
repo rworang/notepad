@@ -6,9 +6,6 @@ import axiosAuth from '@/api/axiosAuth'
 export const useUserStore = defineStore('user', {
   state() {
     const router = useRouter()
-
-    const sidemenuToggled = ref(false)
-    const usermenuToggled = ref(false)
     const isAuthenticated = ref(false)
     const isAdmin = ref(false)
     const id = ref('')
@@ -16,14 +13,6 @@ export const useUserStore = defineStore('user', {
     const token = ref('')
     const avatar = ref('')
 
-    function setSidemenu(bool) {
-      sidemenuToggled.value = bool
-    }
-    function setUsermenu(bool) {
-      usermenuToggled.value = bool
-    }
-
-    // const doubleCount = computed(() => count.value * 2)
     function setCurrentUser(user) {
       isAdmin.value = user.isAdmin
       id.value = user._id
@@ -78,16 +67,12 @@ export const useUserStore = defineStore('user', {
     }
 
     return {
-      sidemenuToggled,
       isAuthenticated,
-      usermenuToggled,
       isAdmin,
       id,
       name,
       token,
       avatar,
-      setSidemenu,
-      setUsermenu,
       setCurrentUser,
       login,
       register,
