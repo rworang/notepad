@@ -15,9 +15,10 @@ import NavBar from '@/components/NavBar.vue'
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   color: var(--nt-c-gray-darker);
   background-color: var(--nt-c-gray-light);
   margin-top: var(--nt-navbar-height);
-  padding: 0 8px;
+  padding: 16px;
 }
 </style>

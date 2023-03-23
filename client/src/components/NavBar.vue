@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../stores/user'
+import UserMenu from './UserMenu.vue'
+const user = useUserStore()
+const router = useRouter()
+</script>
 
 <template>
   <header class="navbar">
@@ -10,8 +16,9 @@
     </div>
     <div class="center"></div>
     <div class="right">
-      <div class="username">Amnezia</div>
-      <div class="avatar"><img src="" /></div>
+      <template v-if="user.isAuthenticated">
+        <UserMenu />
+      </template>
     </div>
   </header>
 </template>
@@ -30,6 +37,7 @@
   justify-content: space-between;
   padding: 4px 6px;
   box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.17);
+  z-index: 500;
 
   .left,
   .center,
@@ -45,14 +53,5 @@
 }
 .app-title {
   padding: 2px;
-}
-.username {
-  padding: 0 8px;
-}
-.avatar {
-  width: 28px;
-  height: 28px;
-  background-color: var(--nt-c-gray-dark);
-  border-radius: 50%;
 }
 </style>

@@ -30,7 +30,7 @@ const connect = () => {
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:6565",
     credentials: true,
   })
 );

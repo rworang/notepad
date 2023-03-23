@@ -4,7 +4,7 @@
   <div class="no-notes">
     <mdicon name="paw" size="128" />
     <span class="subtitle" v-html="`No notes`" />
-    <button>Make a new note <mdicon name="plus" /></button>
+    <button class="active-shadow">Make a new note <mdicon name="plus" size="20" /></button>
   </div>
 </template>
 
@@ -31,8 +31,6 @@
     overflow: hidden;
     border-radius: 11px;
     padding: 8px 8px 8px 16px;
-    background-color: #fff;
-    box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.06);
 
     span {
       margin-left: 8px;

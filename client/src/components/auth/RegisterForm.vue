@@ -1,8 +1,8 @@
 <script setup></script>
 
 <template>
-  <div class="login-form">
-    <h2 class="form-title" v-html="`Login`" />
+  <div class="register-form">
+    <h2 class="form-title" v-html="`Register`" />
     <div class="form-row">
       <input class="active-shadow" type="text" placeholder="Username" />
     </div>
@@ -10,16 +10,16 @@
       <input class="active-shadow" type="password" placeholder="Password" />
     </div>
     <div class="form-row">
-      <button class="login-button active-shadow">Login</button>
+      <button class="register-button active-shadow">Register</button>
     </div>
     <div class="form-row">
-      <span>Login to your account or <span class="nt-link">create</span> one.</span>
+      <span>Create your account or <span class="nt-link">login</span>.</span>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +38,7 @@
   align-items: center;
 }
 
-.login-button {
+.register-button {
   margin: 6px 0;
 }
 

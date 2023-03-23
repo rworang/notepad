@@ -5,12 +5,17 @@ import { generateRefreshToken } from "../middleware/generateRefreshToken.js";
 
 export const register = async (req, res, next) => {
   try {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(req.body.password, salt);
-    const newUser = new User({ ...req.body, password: hash });
+    const user = await User.findOne({ name });
+    if (!user) {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(req.body.password, salt);
+      const newUser = new User({ ...req.body, password: hash });
 
-    await newUser.save();
-    res.status(200).send("User has been created");
+      await newUser.save();
+      res.status(200).send("User has been created");
+    } else {
+      next({ status: 500, message: "Username already exists" });
+    }
   } catch (err) {
     next(err);
   }

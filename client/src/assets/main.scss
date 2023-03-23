@@ -10,4 +10,40 @@
   width: 100%;
   height: 100vh;
   font-size: 16px;
+  cursor: default;
+  user-select: none;
+}
+
+.nt-link {
+  cursor: pointer;
+  color: var(--nt-c-amber) !important;
+  transition: all 150ms;
+}
+.nt-link:hover {
+  text-decoration: underline;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  color: var(--nt-c-gray-dark);
+  overflow: hidden;
+  padding: 5px 18px;
+  border-radius: 11px;
+  background-color: #fff;
+}
+button:hover {
+  color: var(--nt-c-gray-lighter);
+  background-color: var(--nt-c-amber);
+}
+button:active {
+  background-color: var(--nt-c-amber-light);
+}
+
+.active-shadow {
+  box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.06);
+  transition: all 200ms;
+}
+.active-shadow:hover {
+  box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.06), 0 1px 2px 1px rgba(0, 0, 0, 0.12);
 }
