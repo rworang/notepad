@@ -1,11 +1,13 @@
 <script setup>
 import { computed } from 'vue'
 import { useAppDataStore } from '../../stores/app-data'
+import SideMenuItem from './SideMenuItem.vue'
 const appData = useAppDataStore()
 
 const props = defineProps({
   nested: Array,
-  toggled: Boolean
+  toggled: Boolean,
+  layer: Number
 })
 
 const height = computed(() => {
@@ -16,7 +18,12 @@ const height = computed(() => {
 
 <template>
   <div class="submenu" :style="`margin-top: ${toggled ? '0' : height}px`">
-    <span class="item" v-for="(nestedItem, key) in nested" :key="key" v-html="nestedItem.title" />
+    <SideMenuItem
+      v-for="(nestedItem, key) in nested"
+      :key="key"
+      :item="nestedItem"
+      :layer="layer - 10"
+    />
   </div>
 </template>
 
@@ -24,6 +31,8 @@ const height = computed(() => {
 .submenu {
   display: flex;
   flex-direction: column;
+  background-color: var(--nt-c-amber-dark);
+  padding-left: 8px;
   transition: all 220ms;
 }
 .item {
@@ -32,7 +41,6 @@ const height = computed(() => {
   padding: 12px 32px;
   border-color: var(--nt-c-amber);
   background-color: var(--nt-c-gray-dark);
-  z-index: 450;
   transition: all 220ms;
 }
 .item:hover {

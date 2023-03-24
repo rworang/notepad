@@ -11,7 +11,12 @@ const toggled = computed(() => {
 
 <template>
   <div class="sidemenu" :style="`margin-left: ${toggled ? '0' : '-280px'}`">
-    <SideMenuItem v-for="(item, key) in appData.sidemenu.items" :key="key" :item="item" />
+    <SideMenuItem
+      v-for="(item, key) in appData.sidemenu.items"
+      :key="key"
+      :item="item"
+      :layer="450"
+    />
   </div>
 </template>
 

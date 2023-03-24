@@ -5,7 +5,8 @@ import SideMenuItemSubmenu from './SideMenuItemSubmenu.vue'
 const appData = useAppDataStore()
 
 const props = defineProps({
-  item: Object
+  item: Object,
+  layer: Number
 })
 
 const toggled = ref(false)
@@ -13,11 +14,16 @@ const toggled = ref(false)
 
 <template>
   <div class="item-wrapper">
-    <div class="item" @click="item.nested ? (toggled = !toggled) : ''">
+    <div class="item" @click="item.nested ? (toggled = !toggled) : ''" :style="`z-index: ${layer}`">
       <span v-html="item.title" />
       <mdicon :name="`${toggled ? 'chevronUp' : 'chevronDown'}`" v-if="item.nested" />
     </div>
-    <SideMenuItemSubmenu v-if="item.nested" :nested="item.nested" :toggled="toggled" />
+    <SideMenuItemSubmenu
+      v-if="item.nested"
+      :nested="item.nested"
+      :toggled="toggled"
+      :layer="layer"
+    />
   </div>
 </template>
 
@@ -34,7 +40,6 @@ const toggled = ref(false)
   padding: 12px 22px;
   border-color: var(--nt-c-amber-dark);
   background-color: var(--nt-c-gray-darkest);
-  z-index: 460;
   transition: all 220ms;
 
   span:first-child {
