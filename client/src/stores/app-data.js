@@ -4,37 +4,40 @@ import { ref } from 'vue'
 export const useAppDataStore = defineStore('app-data', {
   state() {
     const sidemenu = ref({
-      toggled: false,
+      toggled: true,
       items: [
         {
           title: 'Home',
           to: '/',
-          for: 'all' // all, authenticated, admin
+          for: 'all', // all, authenticated, admin
+          nested: false
         },
         {
           title: 'Profile',
           to: '/user/profile',
-          for: 'authenticated' // all, authenticated, admin
-        },
-        {
-          title: 'Notes',
-          to: '/user/notes',
-          for: 'authenticated' // all, authenticated, admin
-        },
-        {
-          title: 'Settings',
-          to: '/settings',
-          for: 'authenticated' // all, authenticated, admin
+          for: 'authenticated', // all, authenticated, admin
+          nested: [
+            {
+              title: 'Notes',
+              to: '/user/notes'
+            },
+            {
+              title: 'Settings',
+              to: '/user/settings'
+            }
+          ]
         },
         {
           title: 'Admin',
           to: '/admin',
-          for: 'admin' // all, authenticated, admin
+          for: 'admin', // all, authenticated, admin
+          nested: false
         },
         {
           title: 'Login',
           to: '/login',
-          for: 'all' // all, authenticated, admin
+          for: 'all', // all, authenticated, admin
+          nested: false
         }
       ]
     })

@@ -53,7 +53,6 @@ onUnmounted(() => {
   position: relative;
   display: flex;
   .user-menu-info {
-    width: 160px;
     display: flex;
     align-items: center;
     cursor: pointer;

@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import { useAppDataStore } from '../stores/app-data'
+import { useAppDataStore } from '../../stores/app-data'
+import SideMenuItem from './SideMenuItem.vue'
 const appData = useAppDataStore()
 
 const toggled = computed(() => {
@@ -10,9 +11,7 @@ const toggled = computed(() => {
 
 <template>
   <div class="sidemenu" :style="`margin-left: ${toggled ? '0' : '-280px'}`">
-    <template v-for="(item, key) in appData.sidemenu.items" :key="key">
-      <span class="sidemenu-item" v-html="item.title" />
-    </template>
+    <SideMenuItem v-for="(item, key) in appData.sidemenu.items" :key="key" :item="item" />
   </div>
 </template>
 
@@ -25,16 +24,11 @@ const toggled = computed(() => {
   background-color: var(--nt-c-gray-darkest);
   z-index: 400;
   transition: all 300ms;
-
-  .sidemenu-item {
-    padding: 12px 22px;
-    cursor: pointer;
-    border-color: var(--nt-c-amber);
-    transition: all 220ms;
-  }
-  .sidemenu-item:hover {
-    background-color: var(--nt-c-gray-darker);
-    border-left: solid 8px var(--nt-c-amber);
-  }
+}
+.submenu {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--nt-c-gray-darker);
+  z-index: 410;
 }
 </style>
