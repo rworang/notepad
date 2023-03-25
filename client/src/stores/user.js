@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', {
     const name = ref('')
     const token = ref('')
     const avatar = ref('')
+    const notes = ref([])
 
     function setCurrentUser(user) {
       isAdmin.value = user.isAdmin
@@ -73,6 +74,7 @@ export const useUserStore = defineStore('user', {
       name,
       token,
       avatar,
+      notes,
       setCurrentUser,
       login,
       register,

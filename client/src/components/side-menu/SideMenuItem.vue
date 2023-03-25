@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue'
-import { useAppDataStore } from '../../stores/app-data'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '../../stores/user'
 import SideMenuItemSubmenu from './SideMenuItemSubmenu.vue'
-const appData = useAppDataStore()
+const router = useRouter()
+const user = useUserStore()
 
 const props = defineProps({
   item: Object,
@@ -10,14 +12,37 @@ const props = defineProps({
 })
 
 const toggled = ref(false)
+
+function checkFor(item) {
+  if (item.for == 'all') {
+    return true
+  }
+  if (item.for == 'authenticated') {
+    return user.isAuthenticated
+  }
+  if (item.for == 'notAuthenticated') {
+    return !user.isAuthenticated
+  }
+  if (item.for == 'admin') {
+    return user.isAdmin
+  }
+  if (!item.for) {
+    return true
+  }
+}
 </script>
 
 <template>
-  <div class="item-wrapper">
-    <div class="item" @click="item.nested ? (toggled = !toggled) : ''" :style="`z-index: ${layer}`">
+  <div class="item-wrapper" v-if="checkFor(item)">
+    <div
+      class="item"
+      @click="item.nested ? (toggled = !toggled) : router.push(item.to)"
+      :style="`z-index: ${layer}`"
+    >
       <span v-html="item.title" />
       <mdicon :name="`${toggled ? 'chevronUp' : 'chevronDown'}`" v-if="item.nested" />
     </div>
+
     <SideMenuItemSubmenu
       v-if="item.nested"
       :nested="item.nested"

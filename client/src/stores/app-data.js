@@ -13,10 +13,13 @@ export const useAppDataStore = defineStore('app-data', {
           nested: false
         },
         {
-          title: 'Profile',
-          to: '/user/profile',
+          title: 'User',
           for: 'authenticated', // all, authenticated, admin
           nested: [
+            {
+              title: 'Profile',
+              to: '/user/profile'
+            },
             {
               title: 'Notes',
               to: '/user/notes'
@@ -36,7 +39,13 @@ export const useAppDataStore = defineStore('app-data', {
         {
           title: 'Login',
           to: '/login',
-          for: 'all', // all, authenticated, admin
+          for: 'notAuthenticated', // all, authenticated, notAuthenticated, admin
+          nested: false
+        },
+        {
+          title: 'Logout',
+          to: '/logout',
+          for: 'authenticated', // all, authenticated, notAuthenticated, admin
           nested: false
         }
       ]

@@ -26,6 +26,8 @@
 button {
   display: flex;
   align-items: center;
+  text-align: center;
+  justify-content: center;
   color: var(--nt-c-gray-dark);
   overflow: hidden;
   padding: 5px 18px;
@@ -46,4 +48,14 @@ button:active {
 }
 .active-shadow:hover {
   box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.06), 0 1px 2px 1px rgba(0, 0, 0, 0.12);
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--nt-c-gray-darker);
+}
+p {
+  margin-bottom: 4px;
 }

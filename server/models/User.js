@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    notesCount: {
+      type: Number,
+      default: 0,
+    },
     notes: {
       type: Array,
       default: [],

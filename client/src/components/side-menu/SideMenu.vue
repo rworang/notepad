@@ -10,7 +10,7 @@ const toggled = computed(() => {
 </script>
 
 <template>
-  <div class="sidemenu" :style="`margin-left: ${toggled ? '0' : '-280px'}`">
+  <div class="sidemenu" :style="`margin-left: ${toggled ? '0' : '-200px'}`">
     <SideMenuItem
       v-for="(item, key) in appData.sidemenu.items"
       :key="key"
@@ -22,7 +22,9 @@ const toggled = computed(() => {
 
 <style lang="scss" scoped>
 .sidemenu {
-  width: 240px;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
   display: flex;
   flex-direction: column;
   color: var(--nt-c-gray-lighter);

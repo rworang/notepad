@@ -4,7 +4,9 @@
   <div class="no-notes">
     <mdicon name="paw" size="128" />
     <span class="subtitle" v-html="`No notes`" />
-    <button class="active-shadow">Make your first note <mdicon name="plus" size="20" /></button>
+    <RouterLink to="user/notes">
+      <button class="active-shadow">Make your first note <mdicon name="plus" size="20" /></button>
+    </RouterLink>
   </div>
 </template>
 

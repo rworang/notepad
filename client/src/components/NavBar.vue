@@ -53,9 +53,9 @@ const user = useUserStore()
   padding: 2px;
 }
 .app-title {
-  padding: 2px 6px;
+  padding: 4px 6px 2px 6px;
   font-size: 1.06em;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.5px;
 }
 </style>
