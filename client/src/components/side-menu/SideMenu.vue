@@ -10,27 +10,38 @@ const toggled = computed(() => {
 </script>
 
 <template>
-  <div class="sidemenu" :style="`margin-left: ${toggled ? '0' : '-200px'}`">
-    <SideMenuItem
-      v-for="(item, key) in appData.sidemenu.items"
-      :key="key"
-      :item="item"
-      :layer="450"
-    />
+  <div class="sidemenu-wrapper" :style="`margin-left: ${toggled ? '0' : '-200px'}`">
+    <div class="sidemenu" :style="`margin-left: ${toggled ? '0' : '-200px'}`">
+      <SideMenuItem
+        v-for="(item, key) in appData.sidemenu.items"
+        :key="key"
+        :item="item"
+        :layer="450"
+      />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.sidemenu-wrapper,
 .sidemenu {
   width: 200px;
   min-width: 200px;
   max-width: 200px;
+  height: 100%;
+  transition: all 300ms;
   display: flex;
+}
+.sidemenu-wrapper {
+  position: relative;
+  z-index: 399;
+}
+.sidemenu {
+  position: fixed;
   flex-direction: column;
   color: var(--nt-c-gray-lighter);
   background-color: var(--nt-c-gray-darkest);
   z-index: 400;
-  transition: all 300ms;
 }
 .submenu {
   display: flex;

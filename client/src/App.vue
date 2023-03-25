@@ -15,6 +15,7 @@ import SideMenu from './components/side-menu/SideMenu.vue'
 .app-content {
   width: 100%;
   height: 100%;
+  overflow: auto;
   display: flex;
   color: var(--nt-c-gray-darker);
   background-color: var(--nt-c-gray-light);

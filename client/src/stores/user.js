@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', {
     const name = ref('')
     const token = ref('')
     const avatar = ref('')
+    const notesCount = ref(0)
     const notes = ref([])
 
     function setCurrentUser(user) {
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', {
       name.value = user.name
       token.value = user.token
       avatar.value = user.avatar
+      notesCount.value = user.notesCount
       isAuthenticated.value = true
     }
 
@@ -30,6 +32,21 @@ export const useUserStore = defineStore('user', {
       token.value = ''
       avatar.value = ''
       isAuthenticated.value = false
+    }
+
+    function addNote(title, content) {
+      if (title.length > 0 && content.length > 0) {
+        const note = {
+          id: notesCount.value,
+          title,
+          content
+        }
+        notes.value.push(note)
+        notesCount.value++
+        return true
+      } else {
+        return false
+      }
     }
 
     async function login(name, password) {
@@ -75,6 +92,7 @@ export const useUserStore = defineStore('user', {
       token,
       avatar,
       notes,
+      addNote,
       setCurrentUser,
       login,
       register,

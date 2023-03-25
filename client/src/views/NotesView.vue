@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useUserStore } from '../stores/user'
 import FormInput from '../components/form/FormInput.vue'
+const user = useUserStore()
 
 const inputs = [
   {
@@ -16,39 +18,61 @@ const inputs = [
     type: 'text'
   }
 ]
+
 const newNoteToggled = ref(false)
+const noteAdded = ref(false)
+
+const submit = async () => {
+  const title = document.getElementById('noteTitleRef').value
+  const content = document.getElementById('noteContentRef').value
+  noteAdded.value = await user.addNote(title, content)
+}
 </script>
 
 <template>
   <div class="note-wrapper">
-    <h2>My notes</h2>
-    <p>You don't have any notes</p>
-
-    <div class="add-note">
-      <template v-if="!newNoteToggled">
+    <div
+      class="add-note"
+      :style="`height: ${newNoteToggled ? 'auto' : '36px'};overflow: ${
+        newNoteToggled ? '' : 'hidden'
+      }`"
+    >
+      <div class="note-header">
+        <h2>My notes</h2>
         <button @click="newNoteToggled = !newNoteToggled">
           New Note <mdicon name="plus" size="20" />
         </button>
-      </template>
+      </div>
 
-      <template v-else>
-        <div class="new-note-form">
-          <input class="note-title" id="noteTitleRef" type="text" placeholder="Enter a title..." />
+      <!-- <template v-if="newNoteToggled"> -->
+      <div class="new-note-form">
+        <input class="note-title" id="noteTitleRef" type="text" placeholder="Enter a title..." />
 
-          <textarea
-            class="note-content"
-            id="noteContentRef"
-            placeholder="Your note"
-            rows="12"
-          ></textarea>
+        <textarea
+          class="note-content"
+          id="noteContentRef"
+          placeholder="Your note"
+          rows="12"
+        ></textarea>
 
-          <div class="form-buttons">
-            <button @click="newNoteToggled = !newNoteToggled">Cancel</button>
-            <button>Save</button>
-          </div>
+        <div class="form-buttons">
+          <button @click="newNoteToggled = !newNoteToggled">Cancel</button>
+          <button @click="submit">Save</button>
         </div>
-      </template>
+      </div>
+      <!-- </template> -->
     </div>
+
+    <template v-if="user.notes.length == 0">
+      <p>You don't have any notes</p>
+    </template>
+    <template v-else>
+      <div v-for="note in user.notes" :key="note.id">
+        <span v-html="note.id" />
+        <span v-html="note.title" />
+        <span v-html="note.content" />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -64,7 +88,15 @@ const newNoteToggled = ref(false)
     width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
     margin: 8px 0;
+    transition: all 200ms;
+
+    .note-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
 
     .new-note-form {
       display: flex;
