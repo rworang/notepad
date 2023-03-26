@@ -1,7 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useUserStore } from '../stores/user'
-import FormInput from '../components/form/FormInput.vue'
 const user = useUserStore()
 
 const inputs = [
@@ -27,40 +26,52 @@ const submit = async () => {
   const content = document.getElementById('noteContentRef').value
   noteAdded.value = await user.addNote(title, content)
 }
+
+const toggleNoteForm = () => {
+  newNoteToggled.value = !newNoteToggled.value
+  const noteForm = document.getElementById('newNoteFormRef')
+  const addNote = document.getElementById('addNoteRef')
+  if (noteForm) {
+    if (newNoteToggled.value) {
+      noteForm.style.marginTop = '0'
+      setTimeout(() => {
+        addNote.style.overflow = 'default'
+      }, 300)
+    } else {
+      addNote.style.overflow = 'hidden'
+      noteForm.style.marginTop = '-400px'
+    }
+  }
+}
 </script>
 
 <template>
-  <div class="note-wrapper">
-    <div
-      class="add-note"
-      :style="`height: ${newNoteToggled ? 'auto' : '36px'};overflow: ${
-        newNoteToggled ? '' : 'hidden'
-      }`"
-    >
-      <div class="note-header">
-        <h2>My notes</h2>
-        <button @click="newNoteToggled = !newNoteToggled">
-          New Note <mdicon name="plus" size="20" />
-        </button>
-      </div>
+  <div class="note-view">
+    <div class="note-wrapper">
+      <div id="addNoteRef" class="add-note">
+        <div class="note-header-wrapper">
+          <div class="note-header">
+            <h2>My notes</h2>
+            <button @click="toggleNoteForm()">New Note <mdicon name="plus" size="20" /></button>
+          </div>
+        </div>
 
-      <!-- <template v-if="newNoteToggled"> -->
-      <div class="new-note-form">
-        <input class="note-title" id="noteTitleRef" type="text" placeholder="Enter a title..." />
+        <div id="newNoteFormRef" class="new-note-form">
+          <input class="note-title" id="noteTitleRef" type="text" placeholder="Enter a title..." />
 
-        <textarea
-          class="note-content"
-          id="noteContentRef"
-          placeholder="Your note"
-          rows="12"
-        ></textarea>
+          <textarea
+            id="noteContentRef"
+            class="note-content"
+            placeholder="Your note"
+            rows="12"
+          ></textarea>
 
-        <div class="form-buttons">
-          <button @click="newNoteToggled = !newNoteToggled">Cancel</button>
-          <button @click="submit">Save</button>
+          <div class="form-buttons">
+            <button @click="toggleNoteForm()">Cancel</button>
+            <button @click="submit">Save</button>
+          </div>
         </div>
       </div>
-      <!-- </template> -->
     </div>
 
     <template v-if="user.notes.length == 0">
@@ -77,48 +88,62 @@ const submit = async () => {
 </template>
 
 <style lang="scss" scoped>
-.note-wrapper {
+.note-view {
   width: 60%;
   display: flex;
   flex-direction: column;
-  padding: 10px 18px;
   margin: 0 auto;
-
-  .add-note {
-    width: 100%;
+  .note-wrapper {
     display: flex;
     flex-direction: column;
-    position: relative;
-    margin: 8px 0;
-    transition: all 200ms;
+    padding: 10px 18px;
 
-    .note-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-
-    .new-note-form {
+    .add-note {
+      width: 100%;
+      min-height: 36px;
       display: flex;
       flex-direction: column;
-
-      .note-title,
-      .note-content {
-        padding: 6px 12px;
-        margin-bottom: 8px;
-        border-radius: 11px;
-      }
-      .note-content {
-        resize: vertical;
-        padding: 8px 12px;
-      }
-
-      .form-buttons {
+      position: relative;
+      margin: 8px 0;
+      overflow: hidden;
+      .note-header-wrapper {
+        height: 36px;
         display: flex;
-        justify-content: flex-end;
+        margin-bottom: 8px;
+        z-index: 350;
+        .note-header {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          background-color: var(--nt-c-gray-light);
+        }
+      }
 
-        button {
-          margin-left: 8px;
+      .new-note-form {
+        display: flex;
+        flex-direction: column;
+        margin-top: -400px;
+        z-index: 340;
+        transition: all 300ms;
+
+        .note-title,
+        .note-content {
+          padding: 6px 12px;
+          margin-bottom: 8px;
+          border-radius: 11px;
+        }
+        .note-content {
+          resize: vertical;
+          padding: 8px 12px;
+        }
+
+        .form-buttons {
+          display: flex;
+          justify-content: flex-end;
+
+          button {
+            margin-left: 8px;
+          }
         }
       }
     }
