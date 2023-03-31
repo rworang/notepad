@@ -1,7 +1,10 @@
+import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
-import { generateAccessToken } from "../middleware/generateAccessToken.js";
-import { generateRefreshToken } from "../middleware/generateRefreshToken.js";
+import {
+  generateTokens,
+  generateRefreshToken,
+} from "../utils/generateTokens.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -31,18 +34,26 @@ export const login = async (req, res, next) => {
     if (!bcrypt.compareSync(password, user.password)) {
       return res.status(401).json({ message: "Authentication failed" });
     }
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
-    req.session.accessToken = accessToken;
-    req.session.refreshToken = refreshToken;
+    const { access_token, refresh_token } = generateTokens(user);
+    req.session.access_token = access_token;
+    req.session.refresh_token = refresh_token;
+
+    res.cookie("access_token", access_token, {
+      maxAge: process.env.JWT_EXPIRES_IN,
+      httpOnly: true,
+      sameSite: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+
     res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
       avatar: user.avatar,
-      lists: user.lists,
+      notesCount: user.notesCount,
+      notes: user.notes,
       isAdmin: user.isAdmin,
-      token: accessToken,
+      token: access_token,
     });
   } catch (err) {
     next(err);
@@ -51,7 +62,18 @@ export const login = async (req, res, next) => {
 
 export const refreshSession = (req, res, next) => {
   try {
-    res.status(200);
+    const decodedRefreshToken = jwt.verify(
+      req.session.refresh_token,
+      process.env.JWT_REFRESH
+    );
+    const user = User.findById(decodedRefreshToken.id).lean();
+
+    if (!user) {
+      throw { status: 401, message: "User not authenticated" };
+    }
+    const refresh_token = generateRefreshToken(user);
+    req.session.refresh_token = refresh_token;
+    res.status(200).json({ message: "Session refreshed" });
   } catch (err) {
     next(err);
   }
@@ -63,6 +85,7 @@ export const logout = (req, res, next) => {
       return next(err);
     }
     res.clearCookie("connect.sid");
+    res.clearCookie("access_token");
     res.status(200).json({ message: "Logout successful" });
   });
 };

@@ -11,6 +11,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import authRoutes from "./routes/auth.js";
+import usersRoutes from "./routes/users.js";
+import notesRoutes from "./routes/notes.js";
 
 const app = express();
 const env = dotenv.config();
@@ -54,6 +56,8 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("dev"));
 app.use("/api/auth", authRoutes);
+app.use("/api/users", usersRoutes);
+app.use("/api/notes", notesRoutes);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
