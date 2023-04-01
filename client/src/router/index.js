@@ -11,9 +11,21 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/user',
+      name: 'user'
+    },
+    {
       path: '/user/notes',
       name: 'notes',
       component: () => import('../views/NotesView.vue')
+    },
+    {
+      path: '/user/profile',
+      name: 'profile'
+    },
+    {
+      path: '/user/settings',
+      name: 'settings'
     },
     {
       path: '/login',
